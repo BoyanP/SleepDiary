@@ -1,0 +1,14 @@
+.entryListView {
+
+    background-color: #a260f7;
+    display: flex;
+}
+
+.addEntryButton {
+
+    border-style: dotted;
+    border-color: #010550;
+    box-shadow: 0.1em 0.1em #010550;
+
+    text-align: center;
+}
