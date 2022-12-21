@@ -4,12 +4,14 @@ const AddEntry = () => {
     //TODO add entry style? button? 
     return (
         <div className= "addEntry">
-            <button className="addEntryButton">
-                <Link href="/form">
-                    New Entry + 
-                </Link>
+            <Link href="/form">
+                <button className="addEntryButton">
+                    
+                        New Entry + 
                 
-            </button>
+                    
+                </button>
+             </Link>
 
         </div>
     );

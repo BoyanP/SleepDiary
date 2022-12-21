@@ -7,7 +7,7 @@ export function useAppContext(){
     return useContext(AppContext);
 }
 
-export function setAppContext(entries: SleepLog[] | undefined){
+export function setAppContext(entries: SleepLog[] ){
     return useContext(React.createContext(entries));
 }
 

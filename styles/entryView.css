@@ -1,10 +1,10 @@
 .entryView {
-
+    margin-top:1em;
     box-shadow: 0.1em 0.1em 0.1em #120029;
     padding: 1em;
     font-family: 'Titillium Web', sans-serif;
     font-size: 24px;
     font-weight: 600;
-    background-color: #bff2e9;
+    background-color: #cafcdc;
     border-bottom: solid;
 }

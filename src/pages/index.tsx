@@ -19,9 +19,20 @@ import SleepForm from '../components/SleepForm';
   let [entries, setEntries] = useState<[SleepLog]>();
   /* if we find entries in the browser cache fill them here */
   useEffect(() => {
+    const onStorage = () => {
+      let storedEntries:string = localStorage.getItem("sleepLogEntries") ||"";
+      if( storedEntries ) {
+        setEntries(JSON.parse(storedEntries) || [])
+      }
+    }
      let storedEntries:string = localStorage.getItem("sleepLogEntries") ||"";
     if( storedEntries ) {
       setEntries(JSON.parse(storedEntries) || []);
+      window.addEventListener('storage', onStorage)
+      return () => {
+        console.log("removing listener on storage from home function")
+        window.removeEventListener('storage',onStorage);
+      }
     }
     
   },[]);
@@ -37,8 +48,8 @@ import SleepForm from '../components/SleepForm';
         </Head>
         <h2 className='center' id="titleHeader"> My Sleep Diary</h2>
         <NavBar></NavBar>
-      <main className={styles.container}>    
-        <EntryListView entryList = {entries} ></EntryListView>
+        <main className={styles.container}>    
+        <EntryListView key={"entryListView"}></EntryListView>
         </main>
 
         <footer className={styles.footer}>

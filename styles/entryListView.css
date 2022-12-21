@@ -4,7 +4,7 @@ background-color: #bff2e9;
 
 .addEntryButton {
 
-    box-shadow: 0.2em 0.3em #010550;
+    box-shadow: 0.2em 0.3em #070f09;
 
     text-align: center;
 }
@@ -24,12 +24,35 @@ background-color: #bff2e9;
 
 .addEntryButton > a {
     display:block;
-    height: 5em;
     text-align: center;
+    width: 7em; 
 }
 
 .addEntryButton:active {
     background-color: #99ffb1;
     box-shadow: 0.1em 0.1em #010550;
     transform: translateY(4px);
+}
+
+.buttonLink {
+    background-color: #99ffb1;
+    box-shadow: 0.1em 0.1em #010550;
+    transform: translateY(4px);
+
+}
+
+.editButton {
+    background-color: #ba8cff;
+    font-size: large;
+    width: 5em 
+}
+
+.deleteButton {
+    background-color: #fc819e;
+    font-size: large;
+    width: 5em
+}
+.buttonSection {
+
+    display:flex;
 }

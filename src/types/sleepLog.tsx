@@ -39,3 +39,9 @@ export interface SleepLog {
     comments: string | undefined;
 
 }
+
+const removeSleepLog = (entries: SleepLog[], entry:SleepLog) =>{
+  return entries.filter((sleepLog)=> sleepLog._id !== entry._id)
+}
+
+export {removeSleepLog};
