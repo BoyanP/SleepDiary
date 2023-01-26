@@ -44,7 +44,9 @@ import SleepForm from '../components/SleepForm';
           <title>My Sleep Diary</title>
           <meta name="description" content="The go-to sleep diary app." />
           <link rel="icon" href="/favicon.ico" />
-          <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet"></link>
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+          <link rel="preconnect" href="https://fonts.gstatic.com"/>
+          <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@1,600&family=Titillium+Web:wght@300&family=Work+Sans:wght@500&display=swap" rel="stylesheet"/>
         </Head>
         <h2 className='center' id="titleHeader"> My Sleep Diary</h2>
         <NavBar></NavBar>

@@ -22,7 +22,7 @@ export default function Entry( props:Props ) {
       </Head>
       <h2 className='center' id="titleHeader"> My Sleep Diary</h2>
       <NavBar></NavBar>
-      <SleepForm {...props.sleepLog}> </SleepForm>
+      <SleepForm></SleepForm>
     </div>
   );
 }

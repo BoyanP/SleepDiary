@@ -1,6 +1,7 @@
 import '../../styles/globals.css';
 import '../../styles/entryView.css';
 import '../../styles/entryListView.css';
+import '../../styles/forms.css';
 import '../../styles/sleepFormStyle.css';
 import type { AppProps } from 'next/app';
 

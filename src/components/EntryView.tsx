@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import React, {useState} from 'react';
+import React, {useState,useCallback} from 'react';
 import {useRouter} from 'next/router';
 import {SleepLog} from '../types/sleepLog';
 import {Substance} from '../types/sleepLog';
@@ -98,8 +98,16 @@ const RatingDisplay = (rating?: Rating): JSX.Element => {
 }
 
 const EntryView = ( {entry, onDelete} : Props ) => {
+    const[editButtonClicked, setEditButtonClicked] = useState(false);
+    const pushEditForm = useCallback(()=>{
+      console.log("does this work?");
+      const router = useRouter();
+      router.push({
+        pathname:`form/${entry.id}`, 
+        query: {...entry}
 
-    console.log("Rendering EntryView");
+      },"/form")
+    },[editButtonClicked]);
     //TODO fix how i get locale
     const locale : string =  "en-US";
     // const displayDate = entry.sleepDate?.toLocaleDateString(locale);
@@ -127,11 +135,14 @@ const EntryView = ( {entry, onDelete} : Props ) => {
     return (
       
         <div className = "entryView">
-            <section className="buttonSection ">
-                <Link href="" >
-                    <button className='buttonLink editButton' onClick={()=>{}}> Edit</button>
+            <section className="buttonSection justifyContent">
+                <Link href={`/form/${entry.id}`}>
+                    <button className='buttonLink editButton'> Edit</button>
                 </Link>
+                {/* TODO don't wrap the buttons in a Link */}
+                <Link href="#">
                   <button className='buttonLink deleteButton' onClick={()=>setShowModal(true)}> Delete</button>
+                </Link>
             </section>
             { genericContentDisplay("Date: ", displayDate) }
             { genericContentDisplay("Bed time: ", entry.bedTime) }

@@ -1,4 +1,5 @@
-export {}
+import crypto from "crypto";
+import {uuid} from "uuid";
 
 export enum Rating {
     none = 0,
@@ -26,7 +27,7 @@ export enum Substance {
 
 
 export interface SleepLog {
-    _id: number;
+    id: string;
     sleepDate: string | undefined;
     bedTime: string | undefined;
     fallAsleepTime: string | undefined;
@@ -41,7 +42,28 @@ export interface SleepLog {
 }
 
 const removeSleepLog = (entries: SleepLog[], entry:SleepLog) =>{
-  return entries.filter((sleepLog)=> sleepLog._id !== entry._id)
+  return entries.filter((sleepLog)=> sleepLog.id !== entry.id)
 }
 
-export {removeSleepLog};
+const getEmptyLog = () => {
+
+  const log = {
+    id:crypto.randomBytes(20).toString('hex'),
+    sleepDate: undefined,
+    bedTime: undefined,
+    fallAsleepTime: "",
+    wakeUpTime: "",
+    sleepQuality: undefined,
+    sleepInteruptions: "",
+    substances: undefined,
+    excerciseDescription: "",
+    comments: "",
+
+  }
+  console.log("initial state id:", log.id);
+  return log;
+}
+
+export {removeSleepLog, getEmptyLog};
+
+

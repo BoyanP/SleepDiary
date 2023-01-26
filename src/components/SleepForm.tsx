@@ -1,11 +1,8 @@
 import {useRouter} from 'next/router'
-import {useRef,useEffect ,useState} from "react";
-import { SleepLog } from "../types/sleepLog";
+import React, {useRef,useEffect ,useState, ComponentLifecycle, ChangeEventHandler} from "react";
+import { SleepLog, getEmptyLog, removeSleepLog } from "../types/sleepLog";
 import { Rating } from '../types/sleepLog';
 import { FormEvent } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { setAppContext } from './AppContext';
-
 
 
 const getRating = (userInput: string):Rating  => {
@@ -40,123 +37,111 @@ const getRating = (userInput: string):Rating  => {
 this is the form that adds entries to the sleep diary.
 after the state is updated, useEffect is used on SleepLog to update the entries in local storage. 
  */
-const SleepForm = ( props: SleepLog) => {
+const SleepForm = (diaryProps:SleepLog| undefined) => {
+    console.log("sleep form props",diaryProps);
     const firstUpdate = useRef(0);
     const router = useRouter();
+    let initialState:SleepLog = getEmptyLog();
+    console.log("initial sleep log state inside of SleepForm", initialState);
+    let [sleepLog, setSleepLog] = useState<SleepLog>(initialState);
+    let [shouldSubmit, setShouldSubmit] = useState(false);
 
-    let [sleepLog, useSleepLog] = useState<SleepLog>({
-        _id:uuidv4(Date.now()),
-        sleepDate:"",
-        bedTime:"",
-        fallAsleepTime:"",
-        comments:"",
-        excerciseDescription:"",
-        sleepInteruptions:"",
-        sleepQuality: Rating.none,
-        wakeUpTime:"",
-        substances:""
+    console.log("sleepLog after setup :" , sleepLog);
 
-    });
+    useEffect(()=> {
+            if (diaryProps != undefined && diaryProps != null) {
+                console.log("diary props are defined :", diaryProps );
+                setSleepLog({...diaryProps});
+            }
+    },[diaryProps]); 
+
     useEffect (() => {
 
-        if ( firstUpdate.current < 2 ){
-            firstUpdate.current += 1 ;
-            console.log("updated firstUpdate", firstUpdate.current)
-            return;
-        }else {
+
+
+        if (shouldSubmit) {
             const sleepEntries = localStorage.getItem('sleepLogEntries');
             let sleepDiaryEntries: SleepLog[] = [];
             if (sleepEntries != null){
                 sleepDiaryEntries = JSON.parse(sleepEntries);
             }
+            if (diaryProps != undefined && diaryProps != null) {
+                console.log("removing this log: ", diaryProps.id);
+                const filteredEntries = removeSleepLog(sleepDiaryEntries, diaryProps);
+                sleepDiaryEntries = filteredEntries;
+            }
             if(sleepLog != null ) {
                 sleepDiaryEntries.push(sleepLog);
             }
+            console.log("this array is going into local storage", sleepDiaryEntries);
             localStorage.setItem('sleepLogEntries', JSON.stringify(sleepDiaryEntries));
             router.push({
                 pathname: "/"
             });
         }
-    },[sleepLog]);
-
-    
-    const sleepDateInputElement = useRef<HTMLInputElement>(null);
-    const bedTimeElement = useRef<HTMLInputElement>(null);
-    const fallAsleepTimeElement = useRef<HTMLInputElement>(null);
-    const commentsElement = useRef<HTMLInputElement>(null);
-    const sleepQualityElement = useRef<HTMLInputElement>(null);
-    const excerciseDescriptionElement = useRef<HTMLInputElement>(null);
-    const sleepInteruptionsElement = useRef<HTMLInputElement>(null);
-    const wakeUpTimeElement = useRef<HTMLInputElement>(null);
-    const substancesElement = useRef<HTMLInputElement>(null);
+    },[shouldSubmit,diaryProps,router,sleepLog]);
 
 
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => { 
         e.preventDefault();
-        
-        let sleepQuality: Rating = getRating( sleepDateInputElement.current?.value || "");
-        useSleepLog({
-            _id: sleepLog._id,
-            sleepDate: sleepDateInputElement.current?.value || "",
-            bedTime : bedTimeElement.current?.value || "",
-            sleepQuality: sleepQuality,
-            fallAsleepTime: fallAsleepTimeElement.current?.value || "",
-            wakeUpTime: wakeUpTimeElement.current?.value || "",
-            substances:substancesElement.current?.value || "",
-            comments: commentsElement.current?.value || "",
-            sleepInteruptions: sleepDateInputElement.current?.value || "",
-            excerciseDescription: excerciseDescriptionElement.current?.value || ""
-        });
+        setShouldSubmit(true);
     }
    
+    const handleChange = (e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLTextAreaElement>): void => {
+        console.log('handleChange')
+        setSleepLog({
+        
+            ...sleepLog,
+            [e.currentTarget.name]:  e.currentTarget.value
+        });
+  };
 
     return (
         <div className="sleepForm">
             <form method="post" className="entryForm" onSubmit={handleSubmit}>
-                <div>
+                <div className="justifyContent">
                     <label>Select a date </label>
-                    <input ref={sleepDateInputElement}  name="sleepDate" type="date"></input>
+                    <input   onChange={handleChange} value={sleepLog.sleepDate} name="sleepDate" type="date"></input>
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label> What time did you go to bed? </label>
-                    <input name="bedTime" ref={bedTimeElement}></input>
+                    <input name="bedTime" onChange={handleChange} value={sleepLog.bedTime}></input>
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label>What time did you fall asleep?</label>
-                    <input name="fallAsleepTime" ref={fallAsleepTimeElement}></input>
+                    <input name="fallAsleepTime"  onChange={handleChange} value={sleepLog.fallAsleepTime}></input>
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label>When did you wake up? </label>
-                    <input name="wakeUpTime" ref={wakeUpTimeElement}></input>
+                    <input name="wakeUpTime" onChange={handleChange} value= {sleepLog.wakeUpTime}></input>
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label>Rate the quality of your sleep: </label>
-                    <input name="sleepQuality" ref={sleepQualityElement}></input>               
+                    <input name="sleepQuality" onChange={handleChange} value={sleepLog.sleepQuality}></input>               
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label> Were there any interuptions to your sleep?</label>
-                    <input name="sleepInteruptions" ref={sleepInteruptionsElement}></input>              
+                    <input name="sleepInteruptions" onChange={handleChange} value={sleepLog.sleepInteruptions}></input>              
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label>Which substances did you consume during the day?</label>
-                    <input name="substances" ref ={substancesElement}></input>
+                    <input name="substances" onChange={handleChange} ></input>
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label> Did you excercise on this date?</label>
-                    <input name="excerciseDescription" ref={excerciseDescriptionElement}></input>               
+                    <input name="excerciseDescription" onChange={handleChange} value={sleepLog.excerciseDescription}></input>               
                 </div>
-                <div>
+                <div className="justifyContent">
                     <label> Other comments: </label>
-                    <input name="comments" ref={commentsElement}></input>
+                    <textarea name="comments" onChange={handleChange} value={sleepLog.comments}></textarea>
                 </div>
 
-                <button type="submit"> Submit</button>
+                <button className="submitButton" type="submit"> Submit</button>
             </form>
         </div>
 
     );
 }
-
 
 
 export default SleepForm;

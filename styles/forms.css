@@ -1,0 +1,36 @@
+form > div > label {
+
+font-family: 'Work Sans', sans-serif;
+font-size: 1.5em;
+}
+
+form > div > input  {
+    height: 1.5em;
+    border-radius: 5px;
+    border-color: #145756;
+    padding:0.4em;
+    margin-left:1em;
+    box-shadow: 3px 2px 2px #145756;
+}
+
+.sleepForm {
+    padding:1em;
+    box-shadow: 10px 5px 5px #145756;
+}
+
+.submitButton {
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 4px;
+    border-color:#063a39;
+    height: 2em;
+    background-color: #d49bd0;
+    font-weight: 900;
+    font-size: 1.5em;
+    font-family: Tahoma, sans-serif;
+    text-align: center;
+    margin: 1em;
+    
+}
+
+

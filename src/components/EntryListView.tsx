@@ -11,7 +11,7 @@ interface Props  {
 
 const EntryListView = () => {
     let entryList = useAppContext();
-    const[entries, setEntries] = useState(entryList);
+    // const[entries, setEntries] = useState(entryList);
     useEffect(()=>{
         //TODO rerender
     },[entryList]);
@@ -43,7 +43,7 @@ const EntryListView = () => {
                       sortedEntries.map((entry)=> {
                 return (
                     <>
-                        <EntryView entry={entry} onDelete={()=>{setLocalStorageEntries(removeSleepLog(sortedEntries,entry))}} key={entry._id}></EntryView>
+                        <EntryView entry={entry} onDelete={()=>{setLocalStorageEntries(removeSleepLog(sortedEntries,entry))}} key={entry.id}></EntryView>
                     </>
                 );
             })

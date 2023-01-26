@@ -1,5 +1,6 @@
 .entryListView {
-background-color: #bff2e9;
+/* background-color: #2B98E3; */
+padding:1em;
 }
 
 .addEntryButton {
@@ -15,7 +16,7 @@ background-color: #bff2e9;
     border-style: solid;
     border-width: 1px;
     height: 5em;
-    background-color: #dcf5e2;
+    background-color: #FFA830;
     font-weight: 900;
     font-size: 1.2em;
     font-family: 'Titillium Web', sans-serif;
@@ -41,18 +42,23 @@ background-color: #bff2e9;
 
 }
 
-.editButton {
-    background-color: #ba8cff;
+.editButton { 
+    background-color: #2B98E3;
     font-size: large;
-    width: 5em 
+    width: 5em;
+    font-weight: bold;
 }
 
 .deleteButton {
-    background-color: #fc819e;
+    background-color: #E32B2B;
     font-size: large;
-    width: 5em
+    width: 5em;
+    font-weight: bold;
 }
 .buttonSection {
 
     display:flex;
+    max-width: 200px;
+
+
 }

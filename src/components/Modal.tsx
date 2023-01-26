@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 
 interface modalModel {
     shouldDisplay:boolean;
@@ -14,7 +15,7 @@ const Modal = (props:modalModel) => {
     if (!props.shouldDisplay) {
         return null
     }
-    return (
+    return createPortal(
         <div className="modal">
             <div className="modal-content">
                 <div className="modal-header">
@@ -25,12 +26,14 @@ const Modal = (props:modalModel) => {
                 <div className="modal-body">
                     {props.body}
                 </div>
-                <div className="modal-footer">
-                    <button className="modal-button modal-continue-button" onClick={props.onContinue}> Continue</button>
-                    <button className="modal-button" onClick={props.onClose}>Close</button>
+                <div className="modal-footer justifyContent">
+                    <button className="modal-button editButton" onClick={props.onClose}> Dismiss</button>
+                    <button className="modal-button modal-continue-button deleteButton" onClick={props.onContinue}> Delete</button>
+                    
                 </div>
             </div>
         </div>
+        , document.body
     );
 }
 
