@@ -101,11 +101,19 @@ const SleepForm = (diaryProps:SleepLog| undefined) => {
             <form method="post" className="entryForm" onSubmit={handleSubmit}>
                 <div className="justifyContent">
                     <label>Select a date </label>
-                    <input   onChange={handleChange} value={sleepLog.sleepDate} name="sleepDate" type="date"></input>
+                    <div>
+                        <input onChange={handleChange} value={sleepLog.sleepDate} name="sleepDate" type="date"></input>
+                        <p className="errorDisplay" id="sleepDateError"></p>
+                    </div>
                 </div>
                 <div className="justifyContent">
                     <label> What time did you go to bed? </label>
                     <input name="bedTime" onChange={handleChange} value={sleepLog.bedTime}></input>
+                    <input type="text" name="TimeOfDay" list="AMPM"/>
+                    <datalist id="AMPM">
+                        <option value="AM"/>
+                        <option value="PM"/>
+                    </datalist>
                 </div>
                 <div className="justifyContent">
                     <label>What time did you fall asleep?</label>
@@ -137,6 +145,7 @@ const SleepForm = (diaryProps:SleepLog| undefined) => {
                 </div>
 
                 <button className="submitButton" type="submit"> Submit</button>
+                <div className="ErrorInfo"></div>
             </form>
         </div>
 

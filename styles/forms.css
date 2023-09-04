@@ -4,7 +4,7 @@ font-family: 'Work Sans', sans-serif;
 font-size: 1.5em;
 }
 
-form > div > input  {
+form > div > input, form > div > div > input  {
     height: 1.5em;
     border-radius: 5px;
     border-color: #145756;
@@ -12,6 +12,17 @@ form > div > input  {
     margin-left:1em;
     box-shadow: 3px 2px 2px #145756;
 }
+
+form>div>textarea,
+form>div>div>textarea {
+    height: 1.5em;
+    border-radius: 5px;
+    border-color: #145756;
+    padding: 0.4em;
+    margin-left: 1em;
+    box-shadow: 3px 2px 2px #145756;
+}
+
 
 .sleepForm {
     padding:1em;
